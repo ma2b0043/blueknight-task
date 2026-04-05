@@ -1,0 +1,17 @@
+# Environment
+.env
+.venv/
+
+# Data files (too large / generated)
+data/faiss.index
+data/companies_meta.pkl
+data/companies.csv
+company_1000_data.xlsx
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store

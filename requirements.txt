@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+httpx
+anthropic
+faiss-cpu
+numpy
+pandas
+openpyxl
+python-dotenv
+tenacity
+sentence-transformers
+torch

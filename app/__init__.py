@@ -1,0 +1,2 @@
+"""Interview task app package."""
+
