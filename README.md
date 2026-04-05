@@ -16,12 +16,11 @@ pip install -r requirements.txt
 
 ### 2. Configuration
 
-Copy `.env.example` to `.env` and fill in your API keys:
+Copy `.env.example` to `.env` and add your Anthropic API key:
 
 ```bash
 cp .env.example .env
-# Edit .env with your keys:
-#   OPENAI_API_KEY=sk-...
+# Edit .env with your key:
 #   ANTHROPIC_API_KEY=sk-ant-...
 ```
 
@@ -192,5 +191,5 @@ Silent relevance degradation is insidious because every health check passes — 
 2. **Hybrid retrieval** — Combine dense (FAISS) and sparse (BM25) retrieval for better recall on exact industry terms.
 3. **Caching layer** — Cache embeddings and search results for repeated queries (common in M&A workflows where advisors run variations of similar searches).
 4. **Comprehensive test suite** — Unit tests for each pipeline stage, integration tests for the full flow, and property-based tests for the termination condition.
-5. **Async embedding calls** — Use `httpx` for non-blocking OpenAI API calls during retrieval.
+5. **Async embedding** — Run embedding inference in a thread pool to avoid blocking the event loop under concurrent load.
 6. **Query expansion** — Use the LLM to generate synonym expansions for key domain terms before embedding.
