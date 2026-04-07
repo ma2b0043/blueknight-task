@@ -187,9 +187,12 @@ Silent relevance degradation is insidious because every health check passes — 
 
 ## What I Would Do With More Time
 
-1. **Cross-encoder re-ranker** — Use a cross-encoder model (e.g. `ms-marco-MiniLM`) for Stage 3 instead of the heuristic. This would dramatically improve ranking quality at the cost of latency.
-2. **Hybrid retrieval** — Combine dense (FAISS) and sparse (BM25) retrieval for better recall on exact industry terms.
-3. **Caching layer** — Cache embeddings and search results for repeated queries (common in M&A workflows where advisors run variations of similar searches).
-4. **Comprehensive test suite** — Unit tests for each pipeline stage, integration tests for the full flow, and property-based tests for the termination condition.
-5. **Async embedding** — Run embedding inference in a thread pool to avoid blocking the event loop under concurrent load.
-6. **Query expansion** — Use the LLM to generate synonym expansions for key domain terms before embedding.
+1. **Managed vector DB (Pinecone / Qdrant Cloud)** — Replace local FAISS with a managed service for horizontal scaling, automatic sharding, and real-time index updates as the company corpus grows beyond 1000.
+2. **Premium embeddings** — Upgrade from local BGE to OpenAI `text-embedding-3-large` or Cohere Embed v3 for better semantic matching quality, especially for niche industry verticals underrepresented in the current corpus.
+3. **Cross-encoder re-ranker** — Use a cross-encoder model (e.g. `ms-marco-MiniLM`) for Stage 3 instead of the heuristic. Cross-encoders jointly encode query+document for dramatically better ranking, at the cost of ~50ms per candidate.
+4. **Hybrid retrieval** — Combine dense (FAISS) and sparse (BM25) retrieval for better recall on exact industry terms that embeddings sometimes under-weight.
+5. **Caching layer** — Redis cache for embeddings and search results. M&A advisors run variations of similar searches — caching avoids redundant computation.
+6. **Comprehensive test suite** — Unit tests for each pipeline stage, integration tests for the full flow, property-based tests for the termination condition, and regression tests with golden query sets.
+7. **Async embedding** — Run embedding inference in a thread pool to avoid blocking the event loop under concurrent load.
+8. **Query expansion** — Use the LLM to generate synonym expansions for key domain terms before embedding.
+9. **Observability stack** — Ship structured logs to Datadog/Grafana, build the score distribution dashboard described in Subtask 3, add Prometheus metrics for p50/p99 latency per stage.
